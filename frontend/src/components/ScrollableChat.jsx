@@ -1,5 +1,5 @@
 import { Avatar, Tooltip } from "@chakra-ui/react";
-import ScrollableFeed from "react-scrollable-feed";
+import { useEffect, useRef } from "react";
 import {
   isLastMessage,
   isSameSender,
@@ -10,19 +10,39 @@ import { ChatState } from "../Context/ChatProvider";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages]);
 
   return (
-    <ScrollableFeed>
+    <div
+      ref={scrollRef}
+      className="messages-scroll-container"
+      style={{
+        height: "100%",
+        width: "100%",
+        minHeight: 0,
+        overflowY: "auto",
+        overflowX: "hidden",
+        boxSizing: "border-box",
+      }}
+    >
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          gap: "8px",
           padding: "8px 2px",
         }}
       >
         {messages?.map((message, index) => {
           const isOwnMessage = message.sender?._id === user?._id;
+
           const showAvatar =
             isSameSender(messages, message, index, user._id) ||
             isLastMessage(messages, index, user._id);
@@ -56,7 +76,9 @@ const ScrollableChat = ({ messages }) => {
               ) : null}
 
               <div
-                className={`chat-bubble ${isOwnMessage ? "chat-bubble--sent" : "chat-bubble--received"}`}
+                className={`chat-bubble ${
+                  isOwnMessage ? "chat-bubble--sent" : "chat-bubble--received"
+                }`}
                 style={{
                   marginLeft: !isOwnMessage
                     ? isSameSenderMargin(messages, message, index, user._id)
@@ -70,7 +92,7 @@ const ScrollableChat = ({ messages }) => {
           );
         })}
       </div>
-    </ScrollableFeed>
+    </div>
   );
 };
 

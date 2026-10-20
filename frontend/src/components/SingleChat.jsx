@@ -283,9 +283,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   <Spinner size="xl" color="teal.500" thickness="3px" />
                 </Flex>
               ) : (
-                <div className="messages">
+                <Box
+                  className="messages"
+                  height="100%"
+                  minH={0}
+                  overflow="hidden"
+                >
                   <ScrollableChat messages={messages} />
-                </div>
+                </Box>
               )}
             </Box>
 
