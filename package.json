@@ -1,3 +1,4 @@
+```json
 {
   "name": "yo-yo",
   "version": "1.0.0",
@@ -8,7 +9,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
-    "build": "npm install --legacy-peer-deps && npm install --prefix frontend --legacy-peer-deps && npm run build --prefix frontend"
+    "build": "npm install --include=dev --prefix frontend --legacy-peer-deps && npm run build --prefix frontend"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -22,3 +23,4 @@
     "socket.io": "^4.8.4"
   }
 }
+```
