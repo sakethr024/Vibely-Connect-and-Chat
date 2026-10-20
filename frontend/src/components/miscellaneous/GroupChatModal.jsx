@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../context/ChatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
 import UserListItem from "../userAvatar/UserListItem";
 
@@ -45,50 +45,48 @@ const GroupChatModal = ({ children }) => {
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
 
-  
-const handleSearch = async (query) => {
-  setSearch(query);
+  const handleSearch = async (query) => {
+    setSearch(query);
 
-  if (!query.trim()) {
-    setSearchResult([]);
-    setLoading(false);
-    return;
-  }
+    if (!query.trim()) {
+      setSearchResult([]);
+      setLoading(false);
+      return;
+    }
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
 
-    const { data } = await axios.get(
-      `/api/user?search=${encodeURIComponent(query.trim())}`,
-      config,
-    );
+      const { data } = await axios.get(
+        `/api/user?search=${encodeURIComponent(query.trim())}`,
+        config,
+      );
 
-    console.log("Group member search results:", data);
+      console.log("Group member search results:", data);
 
-    setSearchResult(Array.isArray(data) ? data : []);
-  } catch (error) {
-    console.error("Group member search failed:", error);
+      setSearchResult(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Group member search failed:", error);
 
-    setSearchResult([]);
+      setSearchResult([]);
 
-    toast({
-      title: "Failed to load users",
-      status: "error",
-      duration: 4000,
-      isClosable: true,
-      position: "bottom",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
-
+      toast({
+        title: "Failed to load users",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "bottom",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = (delUser) => {
     setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));

@@ -14,7 +14,7 @@ import { FiMessageCircle } from "react-icons/fi";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
-import { ChatState } from "../Context/ChatProvider";
+import { ChatState } from "../context/ChatProvider";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
 import GroupChatModal from "./miscellaneous/GroupChatModal";

@@ -18,15 +18,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../context/ChatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
 import UserListItem from "../userAvatar/UserListItem";
 
-const UpdateGroupChatModal = ({
-  fetchMessages,
-  fetchAgain,
-  setFetchAgain,
-}) => {
+const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [groupChatName, setGroupChatName] = useState("");
@@ -42,9 +38,7 @@ const UpdateGroupChatModal = ({
     toast({
       title: "Error occurred",
       description:
-        error?.response?.data?.message ||
-        error?.message ||
-        fallbackMessage,
+        error?.response?.data?.message || error?.message || fallbackMessage,
       status: "error",
       duration: 5000,
       isClosable: true,
@@ -72,7 +66,7 @@ const UpdateGroupChatModal = ({
 
       const { data } = await axios.get(
         `/api/user?search=${encodeURIComponent(query.trim())}`,
-        getConfig()
+        getConfig(),
       );
 
       setSearchResult(Array.isArray(data) ? data : []);
@@ -108,13 +102,13 @@ const UpdateGroupChatModal = ({
           chatId: selectedChat._id,
           chatName,
         },
-        getConfig()
+        getConfig(),
       );
 
       setSelectedChat(data);
       setFetchAgain((prev) => !prev);
       setGroupChatName("");
-      
+
       toast({
         title: "Group name updated",
         status: "success",
@@ -160,7 +154,7 @@ const UpdateGroupChatModal = ({
           chatId: selectedChat._id,
           userId: userToAdd._id,
         },
-        getConfig()
+        getConfig(),
       );
 
       setSelectedChat(data);
@@ -199,7 +193,7 @@ const UpdateGroupChatModal = ({
           chatId: selectedChat._id,
           userId: userToRemove._id,
         },
-        getConfig()
+        getConfig(),
       );
 
       if (isLeaving) {
@@ -246,17 +240,8 @@ const UpdateGroupChatModal = ({
 
           <ModalCloseButton />
 
-          <ModalBody
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-          >
-            <Box
-              w="100%"
-              display="flex"
-              flexWrap="wrap"
-              pb={3}
-            >
+          <ModalBody display="flex" flexDirection="column" alignItems="center">
+            <Box w="100%" display="flex" flexWrap="wrap" pb={3}>
               {selectedChat.users?.map((groupUser) => (
                 <UserBadgeItem
                   key={groupUser._id}

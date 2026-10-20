@@ -40,7 +40,7 @@ import ChatLoading from "../ChatLoading";
 import ProfileModal from "./ProfileModal";
 import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../context/ChatProvider";
 
 function SideDrawer() {
   const [search, setSearch] = useState("");
